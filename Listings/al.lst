@@ -1,0 +1,84 @@
+A51 MACRO ASSEMBLER  AL                                                                   04/23/2023 13:51:31 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\al.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE al.a51 SET(SMALL) DEBUG PRINT(.\Listings\al.lst) OBJECT(.\Objects\al.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H      
+0000 7438              2     Mov A, #38H      
+0002 111F              3     ACALL com    
+0004 740E              4     MOV A, #0EH    
+0006 111F              5     ACALL com    
+0008 7480              6     MOV A, #80H    
+000A 111F              7     ACALL com  
+000C 7401              8     MOV A, #01H      
+000E 111F              9     ACALL com   
+                      10     
+0010 90003E           11     MOV DPTR ,#STR
+0013 7400             12     REV : MOV A,#00H   
+0015 93               13     MOVC A,@A+DPTR    
+0016 6005             14     JZ FINISH      
+0018 112A             15     ACALL L_D    
+001A A3               16     INC DPTR    
+001B 80F6             17     SJMP REV    
+001D 80FE             18     FINISH: SJMP FINISH    
+                      19     
+001F 1135             20     com: ACALL DEL_ROUTINE  
+0021 F5A0             21     MOV P2, A   
+0023 C2B7             22     CLR P3.7   
+0025 D2B6             23     SETB P3.6
+0027 C2B5             24     CLR P3.5
+0029 22               25     RET    
+                      26     
+002A 1135             27     L_D: ACALL DEL_ROUTINE  
+002C F590             28     MOV P1, A      
+002E D2B7             29     SETB P3.7     
+0030 D2B6             30     SETB P3.6     
+0032 C2B5             31     CLR P3.5   
+0034 22               32     RET       
+                      33     
+0035 78FF             34     DEL_ROUTINE: MOV R0, #0FFH  
+0037 79FF             35     L1: MOV R1, #0FFH   
+0039 D9FE             36     L2: DJNZ R1, L2    
+003B D8FA             37     DJNZ R0, L1     
+003D 22               38     RET       
+003E 416C636F         39     STR: DB'Alcohol Detected',0   
+0042 686F6C20                
+0046 44657465                
+004A 63746564                
+004E 00                      
+                      40     END
+                             
+                             
+                             
+                             
+                             
+A51 MACRO ASSEMBLER  AL                                                                   04/23/2023 13:51:31 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+COM. . . . . . . .  C ADDR   001FH   A   
+DEL_ROUTINE. . . .  C ADDR   0035H   A   
+FINISH . . . . . .  C ADDR   001DH   A   
+L1 . . . . . . . .  C ADDR   0037H   A   
+L2 . . . . . . . .  C ADDR   0039H   A   
+L_D. . . . . . . .  C ADDR   002AH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+REV. . . . . . . .  C ADDR   0013H   A   
+STR. . . . . . . .  C ADDR   003EH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

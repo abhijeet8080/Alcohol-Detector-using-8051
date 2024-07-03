@@ -1,0 +1,187 @@
+A51 MACRO ASSEMBLER  AD                                                                   04/14/2023 15:49:48 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\AD.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE AD.a51 SET(SMALL) DEBUG PRINT(.\Listings\AD.lst) OBJECT(.\Objects\AD.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+                       2     
+                       3     
+                       4     
+                       5     
+                       6     
+                       7                     
+                       8                     
+                       9                     
+                      10                     
+                      11                     ;LCD EQU P2        ;D0-D7 connected to P2.0 to P2.7
+                      12             ;RS EQU P3.5       ;RS pin connected to p3.0
+                      13             ;RW EQU P3.6       ;RW pin connected to p3.1
+                      14             ;EN EQU P3.7       ;EN pin connected to p3.2
+                      15     
+0000                  16             ORG 0H
+0000 7438             17             MOV A,#38H         
+0002 11DC             18             ACALL COMMAND      
+0004 740E             19             MOV A,#0EH         
+0006 11DC             20             ACALL COMMAND      
+0008 7401             21             MOV A,#01H         
+000A 11DC             22             ACALL COMMAND      
+000C 7406             23             MOV A,#06H         
+000E 11DC             24             ACALL COMMAND       
+0010 7480             25             MOV A,#80H          
+0012 11DC             26             ACALL COMMAND       
+0014 11F6             27             ACALL DELAY         
+0016 7441             28             MOV A,#'A'          
+0018 11E9             29             ACALL DISPLAY       
+001A 11F6             30             ACALL DELAY         
+001C 744C             31             MOV A,#'L'          
+001E 11E9             32             ACALL DISPLAY       
+0020 11F6             33             ACALL DELAY         
+0022 7443             34             MOV A,#'C'          
+0024 11E9             35             ACALL DISPLAY       
+0026 11F6             36             ACALL DELAY         
+0028 744F             37             MOV A,#'O'          
+002A 11E9             38             ACALL DISPLAY        
+002C 11F6             39             ACALL DELAY          
+002E 7448             40             MOV A,#'H'           
+0030 11E9             41             ACALL DISPLAY        
+0032 11F6             42             ACALL DELAY          
+0034 744F             43             MOV A,#'O'           
+0036 11E9             44             ACALL DISPLAY        
+0038 11F6             45             ACALL DELAY          
+003A 744C             46             MOV A,#'L'           
+003C 11E9             47             ACALL DISPLAY        
+003E 11F6             48             ACALL DELAY          
+0040 7420             49                     MOV A,#' '           
+0042 11E9             50             ACALL DISPLAY        
+0044 11F6             51             ACALL DELAY          
+0046 7444             52            MOV A,#'D'           
+0048 11E9             53             ACALL DISPLAY        
+004A 11F6             54             ACALL DELAY          
+                      55                     
+004C 7445             56             MOV A,#'E'           
+004E 11E9             57             ACALL DISPLAY        
+A51 MACRO ASSEMBLER  AD                                                                   04/14/2023 15:49:48 PAGE     2
+
+0050 11F6             58             ACALL DELAY 
+0052 7454             59             MOV A,#'T'
+0054 11E9             60             ACALL DISPLAY        
+0056 11F6             61             ACALL DELAY          
+                      62             
+0058 7445             63             MOV A,#'E'           
+005A 11E9             64             ACALL DISPLAY        
+005C 11F6             65             ACALL DELAY          
+005E 7443             66             MOV A,#'C'           
+0060 11E9             67             ACALL DISPLAY        
+0062 11F6             68             ACALL DELAY           
+0064 7454             69             MOV A,#'T'            
+0066 11E9             70             ACALL DISPLAY         
+0068 11F6             71             ACALL DELAY           
+006A 7445             72             MOV A,#'E'            
+006C 11E9             73             ACALL DISPLAY         
+006E 11F6             74             ACALL DELAY           
+0070 7444             75                     MOV A,#'D'            
+0072 11E9             76             ACALL DISPLAY         
+0074 11F6             77             ACALL DELAY           
+0076 7406             78              MOV A,#06H         
+0078 11DC             79             ACALL COMMAND       
+007A 74C0             80                     MOV A,#0C0H          
+007C 11DC             81             ACALL COMMAND       
+007E 11F6             82             ACALL DELAY         
+0080 7459             83             MOV A,#'Y'           
+0082 11E9             84             ACALL DISPLAY        
+0084 11F6             85             ACALL DELAY          
+                      86                     
+0086 744F             87             MOV A,#'O'           
+0088 11E9             88             ACALL DISPLAY        
+008A 11F6             89             ACALL DELAY 
+008C 7455             90             MOV A,#'U'
+008E 11E9             91             ACALL DISPLAY        
+0090 11F6             92             ACALL DELAY          
+                      93             
+0092 7427             94             MOV A,#"'"           
+0094 11E9             95             ACALL DISPLAY        
+0096 11F6             96             ACALL DELAY          
+0098 7452             97             MOV A,#'R'           
+009A 11E9             98             ACALL DISPLAY        
+009C 11F6             99             ACALL DELAY           
+009E 7445            100             MOV A,#'E'            
+00A0 11E9            101             ACALL DISPLAY         
+00A2 11F6            102             ACALL DELAY           
+00A4 7420            103             MOV A,#' '            
+00A6 11E9            104             ACALL DISPLAY         
+00A8 11F6            105             ACALL DELAY           
+00AA 7444            106                     MOV A,#'D'            
+00AC 11E9            107             ACALL DISPLAY         
+00AE 11F6            108             ACALL DELAY           
+00B0 7452            109                     MOV A,#'R'           
+00B2 11E9            110             ACALL DISPLAY        
+00B4 11F6            111             ACALL DELAY          
+00B6 7455            112                     MOV A,#'U'           
+00B8 11E9            113             ACALL DISPLAY        
+00BA 11F6            114             ACALL DELAY          
+00BC 744E            115                     MOV A,#'N'           
+00BE 11E9            116             ACALL DISPLAY        
+00C0 11F6            117             ACALL DELAY          
+00C2 744B            118                     MOV A,#'K'           
+00C4 11E9            119             ACALL DISPLAY        
+00C6 11F6            120             ACALL DELAY          
+00C8 742E            121                     MOV A,#'.'           
+00CA 11E9            122             ACALL DISPLAY        
+00CC 11F6            123             ACALL DELAY          
+A51 MACRO ASSEMBLER  AD                                                                   04/14/2023 15:49:48 PAGE     3
+
+00CE 742E            124                     MOV A,#'.'           
+00D0 11E9            125             ACALL DISPLAY        
+00D2 11F6            126             ACALL DELAY          
+00D4 742E            127                     MOV A,#'.'           
+00D6 11E9            128             ACALL DISPLAY        
+00D8 11F6            129             ACALL DELAY          
+00DA 80FE            130      AGAIN: SJMP AGAIN            
+00DC F5A0            131     COMMAND: MOV P2,A             
+00DE C2B5            132             CLR P3.5              
+00E0 C2B6            133             CLR P3.6              
+00E2 D2B7            134             SETB P3.7             
+00E4 11F6            135             ACALL DELAY           
+00E6 C2B7            136              CLR P3.7             
+00E8 22              137              RET                  
+00E9 F5A0            138      DISPLAY:MOV P2,A             
+00EB D2B5            139              SETB P3.5            
+00ED C2B6            140              CLR P3.6             
+00EF D2B7            141              SETB P3.7            
+00F1 11F6            142              CALL DELAY            
+00F3 C2B7            143              CLR P3.7             
+00F5 22              144              RET                  
+                     145     
+00F6 7B32            146      DELAY: MOV R3,#50             
+00F8 7CFF            147      HERE2: MOV R4, #255            
+00FA DCFE            148      HERE1: DJNZ R4, HERE1          
+00FC DBFA            149             DJNZ R3, HERE2
+00FE 22              150             RET
+                     151             END
+A51 MACRO ASSEMBLER  AD                                                                   04/14/2023 15:49:48 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   00DAH   A   
+COMMAND. . . . . .  C ADDR   00DCH   A   
+DELAY. . . . . . .  C ADDR   00F6H   A   
+DISPLAY. . . . . .  C ADDR   00E9H   A   
+HERE1. . . . . . .  C ADDR   00FAH   A   
+HERE2. . . . . . .  C ADDR   00F8H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

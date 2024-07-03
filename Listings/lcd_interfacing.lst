@@ -1,0 +1,220 @@
+A51 MACRO ASSEMBLER  LCD_INTERFACING                                                      05/03/2023 22:45:06 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lcd_interfacing.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lcd_interfacing.a51 SET(SMALL) DEBUG PRINT(.\Listings\lcd_interfacing.l
+                      st) OBJECT(.\Objects\lcd_interfacing.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+                       2     
+                       3     
+                       4                     
+                       5                     
+                       6              ;LCD IS CONNECTED TO P2 PORT OF 8051
+                       7              ;GAS SENSOR IS CONNECTED TO P1.0 PIN OF 8051
+                       8              ;BUZZER/LED IS CONNECTED TO P3.2 PIN
+                       9              ;RS PIN OF LCD TO P3.5
+                      10              ;R/W PIN OF LCD TO P3.6
+                      11              ;E PIN OF LCD TO P3.7
+                      12                 
+  00A0                13                             LCD EQU P2
+  0090                14                             MQ3 EQU P1.0
+  00B2                15                             LED EQU P3.2
+  00B5                16                             RS EQU P3.5
+  00B6                17                             RW EQU P3.6
+  00B7                18                             E EQU P3.7
+                      19                             
+                      20     
+0000                  21                 ORG 0000H
+0000 7590FF           22                 MOV P1, #0FFh        ; Initialize P1 port for input
+0003 75A000           23                 MOV P2, #00h         ; Initialize P2 port for output
+                      24     
+                      25     
+                      26              
+0006 209019           27     LOOP:      JB MQ3, NOT_DETECTED ;JUMP IF P1.0 IS 1   /Alcohol Not Detected
+0009 110D             28                ACALL DETECTED        ;CALL 'DETECTED'    / Alcohol Detected
+000B 80F9             29                SJMP LOOP             ;Keep doing this infinitely   
+                      30     
+000D                  31     DETECTED:
+000D D2B2             32                SETB LED             ;SET P3.2/LED 
+000F 1153             33                ACALL LCD_PRE         ;CALL LCD PRE
+0011 116A             34                    ACALL MSG_ALCOHOL     ;PRINT 'ALCOHOL' ON LCD
+0013 7420             35                    MOV A,#' '            
+0015 11D1             36                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0017 11DE             37                ACALL DELAY           ;GIVE LCD SOMETIME
+0019 1195             38                    ACALL MSG_DETECTED    ;PRINT 'DETECTED' ON LCD
+001B 11E7             39                    ACALL LONG_DELAY      ;CALL DELAY
+001D 11E7             40                        ACALL LONG_DELAY
+001F 11E7             41                        ACALL LONG_DELAY
+                      42     
+                      43     
+0021 22               44                    RET                   ;RETRUN 
+0022                  45     NOT_DETECTED:                    
+0022 C2B2             46                CLR LED             ;TURN OFF THE LED/CLEAR THE P3.2 PORT
+0024 1153             47                ACALL LCD_PRE         ;CALL LCD PRE
+0026 116A             48                ACALL MSG_ALCOHOL     ;PRINT 'ALCOHOL' ON LCD
+0028 7420             49                    MOV A,#' '          
+002A 11D1             50                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+002C 11DE             51                ACALL DELAY           ;GIVE LCD SOMETIME
+002E 744E             52                    MOV A,#'N'            ;DISPLAY LETTER N
+0030 11D1             53                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0032 11DE             54                ACALL DELAY           ;GIVE LCD SOMETIME
+0034 744F             55                        MOV A,#'O'            ;DISPLAY LETTER O
+0036 11D1             56                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0038 11DE             57                ACALL DELAY           ;GIVE LCD SOMETIME
+A51 MACRO ASSEMBLER  LCD_INTERFACING                                                      05/03/2023 22:45:06 PAGE     2
+
+003A 7454             58                MOV A,#'T'            ;DISPLAY LETTER T
+003C 11D1             59                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+003E 11DE             60                ACALL DELAY           ;GIVE LCD SOMETIME
+0040 7406             61                        MOV A,#06H            ;SHIFT CURSOR TO RIGHT
+0042 11C4             62                ACALL COMMAND         ;CALL COMMAND SUBROUTINE
+0044 74C0             63                        MOV A,#0C0H           ;FORCE CURSOR TO BEGINNING OF 2ND LINE
+0046 11C4             64                ACALL COMMAND         ;CALL COMMAND SUBROUTINE
+0048 11DE             65                ACALL DELAY           ;GIVE LCD SOMETIME
+004A 1195             66                ACALL MSG_DETECTED              ;PRINT DETECTED ON LCD
+004C 11DE             67                        ACALL DELAY
+004E 11DE             68                        ACALL DELAY
+0050 80B4             69                        SJMP LOOP             ;JUMP TO LOOP
+0052 22               70                        RET                   ;RETURN
+0053                  71      LCD_PRE: 
+0053 7438             72                MOV A,#38H            ;INITIALIZE LCD 2 LINES AND 5X7 MATRIX
+0055 11C4             73                ACALL COMMAND         ;CALL COMMADN SUBROUTINE
+0057 740E             74                MOV A,#0EH            ;DISPLAY ON , CURSOR BLINKING
+0059 11C4             75                ACALL COMMAND         ;CALL COMMADN SUBROUTINE
+005B 7401             76                MOV A,#01H            ;CLEAR LCD
+005D 11C4             77                ACALL COMMAND         ;CALL COMMAND SUBROUTINE
+005F 7406             78                MOV A,#06H            ;SHIFT CURSOR TO RIGHT
+0061 11C4             79                ACALL COMMAND         ;CALL COMMAND SUBROUTINE
+0063 7480             80                MOV A,#80H            ;FORCE CURSOR TO BEGINNING OF 1ST LINE
+0065 11C4             81                ACALL COMMAND         ;CALL COMMAND SUBROUTINE 
+0067 11DE             82                ACALL DELAY           ;GIVE LCD SOMETIME
+0069 22               83                        RET                   ;RETURN
+006A                  84     MSG_ALCOHOL: 
+006A 7441             85                MOV A,#'A'            ;DISPLAY LETTER A
+006C 11D1             86                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+006E 11DE             87                ACALL DELAY           ;GIVE LCD SOMETIME
+0070 744C             88                MOV A,#'L'            ;DISPLAY LETTER L
+0072 11D1             89                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0074 11DE             90                ACALL DELAY           ;GIVE LCD SOMETIME
+0076 7443             91                MOV A,#'C'            ;DISPLAY LETTER C
+0078 11D1             92                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+007A 11DE             93                ACALL DELAY           ;GIVE LCD SOMETIME
+007C 744F             94                MOV A,#'O'            ;DISPLAY LETTER O
+007E 11D1             95                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0080 11DE             96                ACALL DELAY           ;GIVE LCD SOMETIME
+0082 7448             97                MOV A,#'H'            ;DISPLAY LETTER H
+0084 11D1             98                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0086 11DE             99                ACALL DELAY           ;GIVE LCD SOMETIME
+0088 744F            100                MOV A,#'O'            ;DISPLAY LETTER O
+008A 11D1            101                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+008C 11DE            102                ACALL DELAY           ;GIVE LCD SOMETIME
+008E 744C            103                MOV A,#'L'            ;DISPLAY LETTER L
+0090 11D1            104                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0092 11DE            105                ACALL DELAY           ;GIVE LCD SOMETIME
+0094 22              106                        RET                   ;RETURN
+0095                 107     MSG_DETECTED:           
+                     108             
+0095 7444            109                MOV A,#'D'            ;DISPLAY LETTER D
+0097 11D1            110                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+0099 11DE            111                ACALL DELAY           ;GIVE LCD SOMETIME
+009B 7445            112                        MOV A,#'E'            ;DISPLAY LETTER E
+009D 11D1            113                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+009F 11DE            114                ACALL DELAY           ;GIVE LCD SOMETIME
+00A1 7454            115                MOV A,#'T'            ;DISPLAY LETTER T
+00A3 11D1            116                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+00A5 11DE            117                ACALL DELAY           ;GIVE LCD SOMETIME
+00A7 7445            118                MOV A,#'E'            ;DISPLAY LETTER E
+00A9 11D1            119                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+00AB 11DE            120                ACALL DELAY           ;GIVE LCD SOMETIME
+00AD 7443            121                MOV A,#'C'            ;DISPLAY LETTER C
+00AF 11D1            122                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+00B1 11DE            123                ACALL DELAY           ;GIVE LCD SOMETIME
+A51 MACRO ASSEMBLER  LCD_INTERFACING                                                      05/03/2023 22:45:06 PAGE     3
+
+00B3 7454            124                MOV A,#'T'            ;DISPLAY LETTER T
+00B5 11D1            125                ACALL DISPLAY         ;GIVE LCD SOMETIME
+00B7 7445            126                MOV A,#'E'            ;DISPLAY LETTER E
+00B9 11D1            127                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+00BB 11DE            128                ACALL DELAY           ;GIVE LCD SOMETIME
+00BD 7444            129                        MOV A,#'D'            ;DISPLAY LETTER D
+00BF 11D1            130                ACALL DISPLAY         ;CALL DISPLAY SUBROUTINE
+00C1 11DE            131                ACALL DELAY           ;GIVE LCD SOMETIME
+00C3 22              132                        RET                   ;RETURN
+                     133     
+00C4                 134     COMMAND:   
+00C4 F5A0            135                MOV LCD,A              ;COPY REGISTER A TO PORT 2
+00C6 C2B5            136                CLR RS              ;RS = 0 FOR COMMAND
+00C8 C2B6            137                CLR RW              ;R/W =0 FOR WRITE
+00CA D2B7            138                SETB E             ;E = 1 FOR HIGH PULSE
+00CC 11DE            139                ACALL DELAY           ;GIVE LCD SOMETIME
+00CE C2B7            140                CLR E              ;E = 0 FOR H-TO-L PULSE
+00D0 22              141                RET                   ;RETURN TO MAIN PROGRAM
+                     142      
+                     143      
+00D1                 144      DISPLAY:  
+00D1 F5A0            145                MOV LCD,A              ;COPY REGISTER A TO PORT 2
+00D3 D2B5            146                SETB RS             ;RS = 1 FOR COMMAND
+00D5 C2B6            147                CLR RW             ;R/W =0 FOR WRITE
+00D7 D2B7            148                SETB E             ;E = 1 FOR HIGH PULSE
+00D9 11DE            149                ACALL DELAY           ;GIVE LCD SOMETIME
+00DB C2B7            150                CLR E              ;E = 0 FOR H-TO-L PULSE
+00DD 22              151                RET                   ;RETURN TO MAIN PROGRMA
+                     152     
+00DE                 153      DELAY:    
+00DE 7B64            154                MOV R3, #100            
+00E0 7CFF            155      HERE2:    MOV R4, #255           
+00E2 DCFE            156      HERE1:    DJNZ R4, HERE1         
+00E4 DBFA            157                DJNZ R3, HERE2
+00E6 22              158                RET
+                     159                     
+00E7                 160     Long_DELAY:
+00E7 7D0A            161                MOV R5,#10
+00E9 7EFF            162     AGAIN1:    MOV R6,#0FFH
+00EB 7FFF            163     NEXT:      MOV R7,#0FFH
+00ED DFFE            164     AGAIN:     DJNZ R7, AGAIN
+00EF DEFA            165                DJNZ R6, NEXT
+00F1 DDF6            166                        DJNZ R5,AGAIN1
+00F3 22              167                        RET
+                     168                END
+A51 MACRO ASSEMBLER  LCD_INTERFACING                                                      05/03/2023 22:45:06 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   00EDH   A   
+AGAIN1 . . . . . .  C ADDR   00E9H   A   
+COMMAND. . . . . .  C ADDR   00C4H   A   
+DELAY. . . . . . .  C ADDR   00DEH   A   
+DETECTED . . . . .  C ADDR   000DH   A   
+DISPLAY. . . . . .  C ADDR   00D1H   A   
+E. . . . . . . . .  B ADDR   00B0H.7 A   
+HERE1. . . . . . .  C ADDR   00E2H   A   
+HERE2. . . . . . .  C ADDR   00E0H   A   
+LCD. . . . . . . .  D ADDR   00A0H   A   
+LCD_PRE. . . . . .  C ADDR   0053H   A   
+LED. . . . . . . .  B ADDR   00B0H.2 A   
+LONG_DELAY . . . .  C ADDR   00E7H   A   
+LOOP . . . . . . .  C ADDR   0006H   A   
+MQ3. . . . . . . .  B ADDR   0090H.0 A   
+MSG_ALCOHOL. . . .  C ADDR   006AH   A   
+MSG_DETECTED . . .  C ADDR   0095H   A   
+NEXT . . . . . . .  C ADDR   00EBH   A   
+NOT_DETECTED . . .  C ADDR   0022H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+RS . . . . . . . .  B ADDR   00B0H.5 A   
+RW . . . . . . . .  B ADDR   00B0H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

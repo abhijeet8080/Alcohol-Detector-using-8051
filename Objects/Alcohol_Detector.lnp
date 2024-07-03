@@ -1,0 +1,3 @@
+".\Objects\lcd_interfacing.obj" 
+TO ".\Objects\Alcohol_Detector" 
+PRINT(".\Listings\Alcohol_Detector.m51") RAMSIZE(256) 

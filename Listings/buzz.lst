@@ -1,0 +1,56 @@
+A51 MACRO ASSEMBLER  BUZZ                                                                 04/21/2023 17:50:22 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\buzz.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE buzz.a51 SET(SMALL) DEBUG PRINT(.\Listings\buzz.lst) OBJECT(.\Objects\b
+                      uzz.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+                       2     
+                       3     
+0000                   4     ORG 0000H
+                       5             
+0000 C2B2              6                 CLR P3.2
+0002 3094FD            7     WAIT:   JNB  P1.4, WAIT
+0005 D2B2              8             SETB P3.2
+0007 110E              9                 ACALL DELAY
+0009 2094FD           10     WAIT1:  JB P1.4, WAIT1
+000C                  11             SJMP BACK
+*** ______________________________________^
+*** ERROR #A45 IN 11 (buzz.a51, LINE 11): UNDEFINED SYMBOL (PASS-2)
+000E                  12     DELAY:
+                      13     
+                      14     
+000E 78FF             15             MOV R0, #255
+0010 79FF             16     HERE1:  MOV R1, #255
+0012 D9FE             17     HERE:   DJNZ R1, HERE
+0014 D8FA             18                 DJNZ R0, HERE1
+0016 22               19                 RET
+                      20     
+                      21             END
+                                        
+A51 MACRO ASSEMBLER  BUZZ                                                                 04/21/2023 17:50:22 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .    ----   -----       
+DELAY. . . . . . .  C ADDR   000EH   A   
+HERE . . . . . . .  C ADDR   0012H   A   
+HERE1. . . . . . .  C ADDR   0010H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+WAIT . . . . . . .  C ADDR   0002H   A   
+WAIT1. . . . . . .  C ADDR   0009H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 1 ERROR(S)
